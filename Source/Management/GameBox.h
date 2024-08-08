@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
-
 #include "GameBox.generated.h"
 
 class UMainWidget;

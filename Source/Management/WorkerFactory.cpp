@@ -14,5 +14,5 @@ AWorkerFactory::AWorkerFactory(const FObjectInitializer& FObjectInitializer)
 void AWorkerFactory::CreateWorker()
 {
 	AWorker* worker = GetWorld()->SpawnActor<AWorker>(AWorker::StaticClass());
-	worker->Init();
+	worker->InitFlipbook(L"/Game/Assets/Workers/Cat/Idle/Cat_Idle");
 }

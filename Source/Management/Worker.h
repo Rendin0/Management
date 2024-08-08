@@ -4,17 +4,21 @@
 
 #include "CoreMinimal.h"
 #include "PaperFlipbookActor.h"
-#include "Worker.generated.h"
+#include "WorkerController.h"
+#include "ObjectLoader.h"
 
+
+#include "Worker.generated.h"
 
 class UInventory;
 class AResourceNode;
+class MANWorker;
 
 /**
  *
  */
 UCLASS()
-class MANAGEMENT_API AWorker : public APaperFlipbookActor
+class MANAGEMENT_API AWorker : public APaperFlipbookActor, public WorkerController
 {
 	GENERATED_BODY()
 
@@ -25,11 +29,19 @@ public:
 	UPROPERTY()
 	UInventory* inventory;
 
-	void Init();
+	void InitFlipbook(const FString& path);
 	void MineResourceNode(AResourceNode* targetNode);
+
+	void MoveTo(AActor* target) override;
+	void DebugMessage(const FString& message) override;
+
+	void Tick(float deltaTime) override;
+	void BeginPlay() override;
+
+
 protected:
 
-
 private:
-
+	MANWorker* userScript = nullptr;
+	ObjectLoader loader;
 };

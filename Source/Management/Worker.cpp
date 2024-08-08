@@ -6,22 +6,68 @@
 #include "ResourceNode.h"
 #include "PaperFlipbookComponent.h"
 #include "PaperFlipbook.h"
+#include "MANWorker.h"
+
 
 AWorker::AWorker(const FObjectInitializer& FObjectInitializer)
 	:Super(FObjectInitializer)
 {
+	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.TickInterval = 1.f;
+
+	loader = ObjectLoader();
 }
 
-void AWorker::Init()
+void AWorker::InitFlipbook(const FString& path)
 {
 	UPaperFlipbookComponent* flipbook = this->GetRenderComponent();
-	flipbook->SetFlipbook(LoadObject<UPaperFlipbook>(NULL, L"/Game/Assets/Workers/Cat/Idle/Cat_Idle"));
+	flipbook->SetFlipbook(LoadObject<UPaperFlipbook>(NULL, *path));
 }
 
 void AWorker::MineResourceNode(AResourceNode* targetNode)
 {
-	if (targetNode)
 	{
 		targetNode->GetResource(inventory);
+	}
+}
+
+void AWorker::MoveTo(AActor* target)
+{
+	// Todo
+}
+
+void AWorker::DebugMessage(const FString& message)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, message);
+}
+
+void AWorker::Tick(float deltaTime)
+{
+	Super::Tick(deltaTime);
+
+	if (userScript)
+	{
+		//userScript->Update();
+
+	}
+}
+
+void AWorker::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (loader.MANLoadLibrary("O:/Visual Studio/Projects/PlayerManagement/PlayerManagement/FirstWorker.cpp"))
+	{
+		//FString pointerString = FString::Printf(TEXT("Pointer Address: %p"), loader.CreateUserObject());
+		userScript = (MANWorker*)(loader.CreateUserObject());
+		//GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, pointerString);
+	}
+
+	if (userScript)
+	{
+		FString pointerString = FString::Printf(TEXT("Pointer Address: %p"), userScript);
+		userScript->Init(this);
+		userScript->Begin();
+		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, pointerString);
 	}
 }
