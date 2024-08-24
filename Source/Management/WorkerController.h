@@ -10,6 +10,7 @@
 class MANAGEMENT_API WorkerController
 {
 public:
+	virtual void Move(int x, int y) = 0;
 	virtual void MoveTo(AActor* target) = 0;
 	virtual void DebugMessage(const FString& message) = 0;
 };

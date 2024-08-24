@@ -1,5 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
+using System.IO;
 using UnrealBuildTool;
 
 public class Management : ModuleRules
@@ -10,11 +11,13 @@ public class Management : ModuleRules
 	
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
 
-		PrivateDependencyModuleNames.AddRange(new string[] {  });
-
-        DynamicallyLoadedModuleNames.AddRange(new string[] { });
-
         PublicDefinitions.AddRange(new string[] { "MANAGEMENT_EXPORTS" });
+
+        PublicSystemIncludePaths.Add("O:/Programs/Boost");
+
+        string BoostLibPath = Path.Combine("O:/Programs/Boost", "stage", "lib");
+
+        PublicAdditionalLibraries.Add(Path.Combine(BoostLibPath, "libboost_filesystem-vc143-mt-x64-1_86.lib"));
 
 
 

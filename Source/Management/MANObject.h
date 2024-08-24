@@ -26,9 +26,3 @@ private:
 
 
 };
-
-#define MAN_CREATE()\
-extern "C" __declspec(dllexport) MANObject* CreateUserCode()\
-{\
-    return new MANObject();\
-}

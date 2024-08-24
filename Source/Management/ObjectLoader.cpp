@@ -3,55 +3,48 @@
 
 #include "ObjectLoader.h"
 
-#include "MANObject.h"
+#include <boost/dll/import.hpp>
+#include <boost/function.hpp>
 
 
 bool ObjectLoader::MANLoadLibrary(const FString& path)
 {
-	//CompileLibrary(path);
-
-	userModule = LoadLibrary(L"O:/UserScripts/PlayerManagement.dll");
-	if (!userModule)
+	lib = boost::dll::shared_library(*path);
+	if (!lib.is_loaded())
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, L"Failed to load user DLL");
-		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, FString::FromInt(static_cast<int32>(GetLastError())));
+		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, L"Cannot load library");
 		return false;
 	}
 
-	createUserCode = (CreateUserCodeFunc)(GetProcAddress(userModule, "CreateUserCode"));
+	createUserObject = lib.get<MANWorker* __cdecl()>("CreateUserCode");
 
-	if (!createUserCode)
+	if (!createUserObject)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, L"Failed to load create user code func");
-		FreeLibrary(userModule);
+		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, L"Cannot load create user code func");
 		return false;
 	}
 
-	return createUserCode() != nullptr;
-	//return false;
+	return true;
 }
 
 void ObjectLoader::MANUnloadLibrary()
 {
-	if (userModule)
-	{
-		FreeLibrary(userModule);
-		userModule = nullptr;
-	}
+
+
 }
 
-MANObject* ObjectLoader::CreateUserObject()
+MANWorker* ObjectLoader::CreateUserObject()
 {
-	return createUserCode();
+	if (createUserObject)
+		return createUserObject();
+
+	return nullptr;
 }
 
 void ObjectLoader::CompileLibrary(const FString& path)
 {
-	const char* charPath = TCHAR_TO_UTF8(*path);
 
-	//system("echo clang++ -c \"" + *charPath + *"\" -o O:/UserScripts/UserWorker.obj -I \"O:/UnrealProjects/Management/Source/Management\"");
-	system("clang++ -c \"O:/Visual Studio/Projects/PlayerManagement/PlayerManagement/FirstWorker.cpp\" -o \"O:/UserScripts/UserWorker.obj\" -I \"O:/UnrealProjects/Management/Source/Management\"");
-	system("clang++ -shared -o O:/UserScripts/UserCode.dll O:/UserScripts/UserWorker.obj");
-	system("pause");
 }
+
+
 

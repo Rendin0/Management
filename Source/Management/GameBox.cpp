@@ -7,6 +7,7 @@
 #include "ResourceNode.h"
 #include "Kismet/GameplayStatics.h"
 #include "Worker.h"
+#include "Engine/Engine.h"
 #include "WorkerFactory.h"
 
 // Sets default values

@@ -6,13 +6,12 @@
 #include "PaperFlipbookActor.h"
 #include "WorkerController.h"
 #include "ObjectLoader.h"
-
+#include "MANWorker.h"
 
 #include "Worker.generated.h"
 
 class UInventory;
 class AResourceNode;
-class MANWorker;
 
 /**
  *
@@ -34,6 +33,8 @@ public:
 
 	void MoveTo(AActor* target) override;
 	void DebugMessage(const FString& message) override;
+	void Move(int x, int y) override;
+
 
 	void Tick(float deltaTime) override;
 	void BeginPlay() override;

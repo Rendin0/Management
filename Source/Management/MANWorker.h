@@ -13,7 +13,8 @@
 class MANAGEMENT_API MANWorker : private MANObject
 {
 public:
-	void Debug(const std::string& message) const;
+	void Debug(const std::wstring& message) const;
+	void Move(int x, int y);
 	void Init(AActor* actor);
 
 	virtual void Update() = 0;
@@ -24,3 +25,10 @@ protected:
 
 private:
 };
+
+
+#define CREATE_WORKER(ClassName, FunctionName)\
+extern "C" __declspec(dllexport) MANWorker* __cdecl FunctionName()\
+{\
+    return new ClassName();\
+}

@@ -3,13 +3,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include <Windows.h>
+#include <boost/dll/shared_library.hpp>
+#include "Engine/Engine.h"
+#include "MANWorker.h"
 
-class MANObject;
 
 /**
- * 
+ *
  */
+
+typedef MANWorker* (__cdecl *CreateUserCodeFunc)();
+
 class MANAGEMENT_API ObjectLoader
 {
 public:
@@ -18,12 +22,13 @@ public:
 	bool MANLoadLibrary(const FString& path);
 	void MANUnloadLibrary();
 
-	MANObject* CreateUserObject();
+	MANWorker* CreateUserObject();
 
 	void CompileLibrary(const FString& path);
 private:
-	HMODULE userModule = nullptr;
-	
-	typedef MANObject* (*CreateUserCodeFunc)();
-	CreateUserCodeFunc createUserCode;
+
+	boost::dll::shared_library lib;
+
+	CreateUserCodeFunc createUserObject;
 };
+

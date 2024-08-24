@@ -4,6 +4,7 @@
 #include "WorkerFactory.h"
 #include "Kismet/GameplayStatics.h"
 #include "Worker.h"
+#include "Engine/World.h"
 
 
 AWorkerFactory::AWorkerFactory(const FObjectInitializer& FObjectInitializer)
