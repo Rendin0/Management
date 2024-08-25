@@ -3,6 +3,8 @@
 
 #include "ObjectLoader.h"
 
+#include "MANWorker.h"
+
 #include <boost/dll/import.hpp>
 #include <boost/function.hpp>
 
@@ -16,14 +18,6 @@ bool ObjectLoader::MANLoadLibrary(const FString& path)
 		return false;
 	}
 
-	createUserObject = lib.get<MANWorker* __cdecl()>("CreateUserCode");
-
-	if (!createUserObject)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, L"Cannot load create user code func");
-		return false;
-	}
-
 	return true;
 }
 
@@ -33,13 +27,6 @@ void ObjectLoader::MANUnloadLibrary()
 
 }
 
-MANWorker* ObjectLoader::CreateUserObject()
-{
-	if (createUserObject)
-		return createUserObject();
-
-	return nullptr;
-}
 
 void ObjectLoader::CompileLibrary(const FString& path)
 {

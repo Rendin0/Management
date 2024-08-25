@@ -64,7 +64,7 @@ void AWorker::BeginPlay()
 	if (loader.MANLoadLibrary("O:/Visual Studio/Projects/PlayerManagement/x64/Debug/PlayerManagement.dll"))
 	{
 		//FString pointerString = FString::Printf(TEXT("Pointer Address: %p"), loader.CreateUserObject());
-		userScript = loader.CreateUserObject();
+		userScript = loader.CreateUserObject<MANWorker>("CreateUserCode");
 		//GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, pointerString);
 	}
 
