@@ -3,12 +3,15 @@
 
 #include "Worker.h"
 
-#include "ResourceNode.h"
+// Unreal Headers
 #include "PaperFlipbookComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "PaperFlipbook.h"
-#include "MANWorker.h"
 #include "Engine/Engine.h"
 
+// Custom Headers
+#include "ResourceNode.h"
+#include "MANWorker.h"
 
 AWorker::AWorker(const FObjectInitializer& FObjectInitializer)
 	:Super(FObjectInitializer)
@@ -16,7 +19,6 @@ AWorker::AWorker(const FObjectInitializer& FObjectInitializer)
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.TickInterval = 1.f;
 
-	loader = ObjectLoader();
 }
 
 void AWorker::InitFlipbook(const FString& path)
@@ -60,19 +62,17 @@ void AWorker::Tick(float deltaTime)
 void AWorker::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	auto loader = UGameplayStatics::GetActorOfClass(GetWorld(), AObjectLoader::StaticClass());
 
-	if (loader.MANLoadLibrary("O:/Visual Studio/Projects/PlayerManagement/x64/Debug/PlayerManagement.dll"))
+	if (loader)
 	{
-		//FString pointerString = FString::Printf(TEXT("Pointer Address: %p"), loader.CreateUserObject());
-		userScript = loader.CreateUserObject<MANWorker>("CreateUserCode");
-		//GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, pointerString);
+		userScript = Cast<AObjectLoader>(loader)->CreateUserObject<MANWorker>("CreateUserCode");
 	}
 
 	if (userScript)
 	{
-		FString pointerString = FString::Printf(TEXT("Pointer Address: %p"), userScript);
 		userScript->Init(this);
 		userScript->Begin();
-		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, pointerString);
 	}
 }

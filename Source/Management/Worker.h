@@ -44,5 +44,4 @@ protected:
 
 private:
 	MANWorker* userScript = nullptr;
-	ObjectLoader loader;
 };

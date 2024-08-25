@@ -9,7 +9,19 @@
 #include <boost/function.hpp>
 
 
-bool ObjectLoader::MANLoadLibrary(const FString& path)
+
+AObjectLoader::AObjectLoader(const FObjectInitializer& FObjectInitializer)
+	:Super(FObjectInitializer)
+{
+	PrimaryActorTick.bCanEverTick = false;
+}
+
+void AObjectLoader::Init(const FString& pathToDLL)
+{
+	MANLoadLibrary(pathToDLL);
+}
+
+bool AObjectLoader::MANLoadLibrary(const FString& path)
 {
 	lib = boost::dll::shared_library(*path);
 	if (!lib.is_loaded())
@@ -20,18 +32,4 @@ bool ObjectLoader::MANLoadLibrary(const FString& path)
 
 	return true;
 }
-
-void ObjectLoader::MANUnloadLibrary()
-{
-
-
-}
-
-
-void ObjectLoader::CompileLibrary(const FString& path)
-{
-
-}
-
-
 
