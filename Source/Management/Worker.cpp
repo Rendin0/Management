@@ -62,7 +62,7 @@ void AWorker::Tick(float deltaTime)
 void AWorker::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	auto loader = UGameplayStatics::GetActorOfClass(GetWorld(), AObjectLoader::StaticClass());
 
 	if (loader)

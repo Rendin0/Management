@@ -13,13 +13,15 @@ public class Management : ModuleRules
 
         PublicDefinitions.AddRange(new string[] { "MANAGEMENT_EXPORTS" });
 
-        PublicSystemIncludePaths.Add("O:/Programs/Boost");
+        string BoostPath = "O:/Programs/Boost";
+        string BoostLibPath = Path.Combine(BoostPath, "stage", "lib");
 
-        string BoostLibPath = Path.Combine("O:/Programs/Boost", "stage", "lib");
+        PublicSystemIncludePaths.Add(BoostPath);
 
         PublicAdditionalLibraries.Add(Path.Combine(BoostLibPath, "libboost_filesystem-vc143-mt-x64-1_86.lib"));
-
-
+        PublicAdditionalLibraries.Add(Path.Combine(BoostLibPath, "libboost_exception-vc143-mt-x64-1_86.lib"));
+        
+        bEnableExceptions = true;
 
         // Uncomment if you are using Slate UI
         // PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });

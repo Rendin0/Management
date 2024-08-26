@@ -13,7 +13,7 @@
 class MANAGEMENT_API MANWorker : private MANObject
 {
 public:
-	void Debug(const std::wstring& message) const;
+	void Debug(const wchar_t* message) const;
 	void Move(int x, int y);
 	void Init(AActor* actor);
 

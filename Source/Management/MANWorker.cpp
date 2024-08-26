@@ -5,10 +5,10 @@
 
 	#include "Worker.h"
 
-	void MANWorker::Debug(const std::wstring& message) const
+	void MANWorker::Debug(const wchar_t* message) const
 	{
 		if (boundActor)
-			Cast<AWorker>(boundActor)->DebugMessage(message.c_str());
+			Cast<AWorker>(boundActor)->DebugMessage(FString(message));
 	}
 
 	void MANWorker::Move(int x, int y)
