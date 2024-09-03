@@ -13,10 +13,10 @@ public class Management : ModuleRules
 
         PublicDefinitions.AddRange(new string[] { "MANAGEMENT_EXPORTS" });
 
-        string BoostPath = "O:/Programs/Boost";
+        string BoostPath = "C:/Boost/boost_1_86_0";
         string BoostLibPath = Path.Combine(BoostPath, "stage", "lib");
 
-        PublicSystemIncludePaths.Add(BoostPath);
+        PublicSystemIncludePaths.Add(Path.Combine(BoostPath));
 
         PublicAdditionalLibraries.Add(Path.Combine(BoostLibPath, "libboost_filesystem-vc143-mt-x64-1_86.lib"));
         PublicAdditionalLibraries.Add(Path.Combine(BoostLibPath, "libboost_exception-vc143-mt-x64-1_86.lib"));
