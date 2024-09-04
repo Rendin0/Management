@@ -20,7 +20,12 @@ public class Management : ModuleRules
 
         PublicAdditionalLibraries.Add(Path.Combine(BoostLibPath, "libboost_filesystem-vc143-mt-x64-1_86.lib"));
         PublicAdditionalLibraries.Add(Path.Combine(BoostLibPath, "libboost_exception-vc143-mt-x64-1_86.lib"));
-        
+
+        string editorLibsPath = "C:/Users/Repin_aw53/UnrealProjects/Management/Content/Libs";
+
+        PublicAdditionalLibraries.Add(Path.Combine(editorLibsPath, "UnrealEditor-Management.lib"));
+        PublicAdditionalLibraries.Add(Path.Combine(editorLibsPath, "UnrealEditor-Management.sup.lib"));
+
         bEnableExceptions = true;
 
         // Uncomment if you are using Slate UI

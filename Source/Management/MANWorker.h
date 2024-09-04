@@ -6,6 +6,7 @@
 
 #include "MANObject.h"
 #include <string>
+#include <map>
 
 /**
  * 
@@ -14,8 +15,11 @@ class MANAGEMENT_API MANWorker : private MANObject
 {
 public:
 	void Debug(const wchar_t* message) const;
-	void Move(int x, int y);
 	void Init(AActor* actor);
+	void MoveTo(const MANObject& object);
+	void MoveTo(const MANObject* object);
+	void MoveTo(const std::pair<double, double> position);
+	std::pair<double, double> FindNearestResourceNode() const;
 
 	virtual void Update() = 0;
 	virtual void Begin() = 0;
@@ -24,6 +28,7 @@ protected:
 
 
 private:
+
 };
 
 

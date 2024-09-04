@@ -7,3 +7,8 @@ void MANObject::SetBoundActor(AActor* actor)
 {
 	boundActor = actor;
 }
+
+AActor* MANObject::GetBoundActor() const
+{
+	return boundActor;
+}

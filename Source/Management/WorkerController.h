@@ -10,7 +10,7 @@
 class MANAGEMENT_API WorkerController
 {
 public:
-	virtual void Move(int x, int y) = 0;
-	virtual void MoveTo(AActor* target) = 0;
-	virtual void DebugMessage(const FString& message) = 0;
+	virtual void MoveTo(const FVector& location) = 0;
+	virtual void DebugMessage(const FString& message) const = 0;
+	virtual FVector FindNearestResourceNode() const = 0;
 };

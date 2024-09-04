@@ -17,10 +17,13 @@ class AActor;
 class MANAGEMENT_API MANObject
 {
 public:
-	void SetBoundActor(AActor* actor);
+	friend class MANWorker;
 
 protected:
+	void SetBoundActor(AActor* actor);
 	AActor* boundActor;
+	AActor* GetBoundActor() const;
+
 
 private:
 

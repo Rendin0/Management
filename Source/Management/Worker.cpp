@@ -34,19 +34,37 @@ void AWorker::MineResourceNode(AResourceNode* targetNode)
 	}
 }
 
-void AWorker::MoveTo(AActor* target)
+void AWorker::MoveTo(const FVector& location)
 {
-	// Todo
+	const FVector currentLocation = GetActorLocation();
+
+	SetActorLocation(currentLocation + ((location - currentLocation).GetSafeNormal() * moveSpeed));
 }
 
-void AWorker::DebugMessage(const FString& message)
+void AWorker::DebugMessage(const FString& message) const
 {
 	GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, message);
 }
 
-void AWorker::Move(int x, int y)
+FVector AWorker::FindNearestResourceNode() const
 {
-	SetActorLocation(GetActorLocation() + FVector(x, 0, y));
+	TArray<AActor*> outActors{};
+
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AResourceNode::StaticClass(), outActors);
+
+	if (outActors.IsEmpty())
+		return GetActorLocation();
+
+	FVector nearest = outActors[0]->GetActorLocation();
+	FVector currentLocation = GetActorLocation();
+
+	for (const auto& actor : outActors)
+	{
+		if (FVector::Dist2D(currentLocation, actor->GetActorLocation()) < nearest.Length())
+			nearest = actor->GetActorLocation();
+	}
+
+	return nearest;
 }
 
 void AWorker::Tick(float deltaTime)

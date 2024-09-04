@@ -31,10 +31,9 @@ public:
 	void InitFlipbook(const FString& path);
 	void MineResourceNode(AResourceNode* targetNode);
 
-	void MoveTo(AActor* target) override;
-	void DebugMessage(const FString& message) override;
-	void Move(int x, int y) override;
-
+	void MoveTo(const FVector& position) override;
+	void DebugMessage(const FString& message) const override;
+	FVector FindNearestResourceNode() const override;
 
 	void Tick(float deltaTime) override;
 	void BeginPlay() override;
@@ -44,4 +43,6 @@ protected:
 
 private:
 	MANWorker* userScript = nullptr;
+
+	double moveSpeed = 10.;
 };

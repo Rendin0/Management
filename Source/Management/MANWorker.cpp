@@ -11,14 +11,35 @@
 			Cast<AWorker>(boundActor)->DebugMessage(FString(message));
 	}
 
-	void MANWorker::Move(int x, int y)
-	{
-		if (boundActor)
-			Cast<AWorker>(boundActor)->Move(x, y);
-
-	}
-
 	void MANWorker::Init(AActor* actor)
 	{
 		SetBoundActor(actor);
+	}
+
+	void MANWorker::MoveTo(const MANObject& object)
+	{
+		if (boundActor)
+			Cast<AWorker>(boundActor)->MoveTo(object.GetBoundActor()->GetActorLocation());
+	}
+
+	void MANWorker::MoveTo(const MANObject* object)
+	{
+		MoveTo(*object);
+	}
+
+	void MANWorker::MoveTo(const std::pair<double, double> position)
+	{
+		if (boundActor)
+			Cast<AWorker>(boundActor)->MoveTo(FVector(position.first, 0, position.second));
+	}
+
+	std::pair<double, double> MANWorker::FindNearestResourceNode() const
+	{
+		FVector position{};
+
+		if (boundActor)
+			position = Cast<AWorker>(boundActor)->FindNearestResourceNode();
+
+
+		return std::pair<double, double>(position.X, position.Z);
 	}
