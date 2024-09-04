@@ -11,10 +11,11 @@
 /**
  * 
  */
-class MANAGEMENT_API MANWorker : private MANObject
+class MAN_API MANWorker : private MANObject
 {
 public:
-	void Debug(const wchar_t* message) const;
+
+	void  Debug(const wchar_t* message) const;
 	void Init(AActor* actor);
 	void MoveTo(const MANObject& object);
 	void MoveTo(const MANObject* object);
@@ -25,6 +26,7 @@ public:
 	virtual void Begin() = 0;
 
 protected:
+	MANWorker();
 
 
 private:
