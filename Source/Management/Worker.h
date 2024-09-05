@@ -7,6 +7,7 @@
 #include "WorkerController.h"
 #include "ObjectLoader.h"
 #include "MANWorker.h"
+#include "Inventory.h"
 
 #include "Worker.generated.h"
 

@@ -5,27 +5,24 @@
 
 UInventory::UInventory()
 {
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
+	items = TMap<FName, int32>();
 }
 
 void UInventory::AddItem(FName name, int32 amount)
 {
-	int32* value = nullptr;
-	if (items.Contains(name))
-		value = items.Find(name);
+	bool value = Check(name);
 
-	FString message = FString::Printf(L"Pointer: %p", value);
-
-	GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, message);
+	GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, FString::Printf(L"Pointer to: %d", value));
 
 	//if (value)
-	//	(*value) += amount;
+	//	items.Add(name, amount + (*value));
 	//else
-	//	items.Add(name, amount);
+	//	items.Emplace(name, amount);
 }
 
-void UInventory::GiveItem(FName name, int32 amount, UInventory* reciever)
+void UInventory::TakeItem(FName name, int32 amount, UInventory* reciever)
 {
 	int32* value = items.Find(name);
 

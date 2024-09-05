@@ -19,7 +19,8 @@ public:
 
 
 	UFUNCTION(BlueprintCallable)
-	void GiveItem(FName name, int32 amount, UInventory* reciever);
+	void TakeItem(FName name, int32 amount, UInventory* reciever);
+	// Moves item from this inventory to reciever
 
 	UFUNCTION(BlueprintCallable)
 	bool Check(FName name);

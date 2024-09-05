@@ -14,6 +14,7 @@
 #include "ResourceNode.h"
 #include "MANWorker.h"
 
+
 AWorker::AWorker(const FObjectInitializer& FObjectInitializer)
 	:Super(FObjectInitializer)
 {
