@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "PaperFlipbookActor.h"
+#include "MANResourceNode.h"
+
 
 #include "ResourceNode.generated.h"
 /**
@@ -22,14 +24,18 @@ public:
 	AResourceNode(const FObjectInitializer& ObjectInitializer);
 
 	UFUNCTION()
-	void GetResource(UInventory* reciever);
+	int GetResource(UInventory* reciever);
 
 	TMap<FName, float> resources;
+
+	MANResourceNode* GetAPINode();
 protected:
 	
 
 private:
 	UFUNCTION(BlueprintCallable)
 	void AddResource(FName name, float chance);
+
+	MANResourceNode apiNode{};
 
 };

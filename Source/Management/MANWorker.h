@@ -8,6 +8,8 @@
 #include <string>
 #include <map>
 
+class MANResourceNode;
+
 /**
  * 
  */
@@ -20,13 +22,13 @@ public:
 	void MoveTo(const MANObject& object);
 	void MoveTo(const MANObject* object);
 	void MoveTo(const std::pair<double, double> position);
-	std::pair<double, double> FindNearestResourceNode() const;
+	MANResourceNode* FindNearestResourceNode() const;
+	int MineResourceNode(MANResourceNode* node);
 
 	virtual void Update() = 0;
 	virtual void Begin() = 0;
 
 protected:
-	MANWorker();
 
 
 private:

@@ -11,12 +11,18 @@ UInventory::UInventory()
 
 void UInventory::AddItem(FName name, int32 amount)
 {
-	int32* value = items.Find(name);
+	int32* value = nullptr;
+	if (items.Contains(name))
+		value = items.Find(name);
 
-	if (value)
-		*value += amount;
-	else
-		items.Add(name, amount);
+	FString message = FString::Printf(L"Pointer: %p", value);
+
+	GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, message);
+
+	//if (value)
+	//	(*value) += amount;
+	//else
+	//	items.Add(name, amount);
 }
 
 void UInventory::GiveItem(FName name, int32 amount, UInventory* reciever)

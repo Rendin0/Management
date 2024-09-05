@@ -17,6 +17,9 @@ class AActor;
 class MAN_API MANObject
 {
 public:
+	MANObject() = default;
+
+	friend class MANResourceNode;
 	friend class MANWorker;
 
 protected:

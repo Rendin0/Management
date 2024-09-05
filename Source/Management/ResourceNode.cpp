@@ -2,6 +2,7 @@
 
 
 #include "ResourceNode.h"
+#include "MANResourceNode.h"
 
 #include "Inventory.h"
 
@@ -10,15 +11,27 @@ AResourceNode::AResourceNode(const FObjectInitializer& ObjectInitializer)
 {
 	PrimaryActorTick.bCanEverTick = false;
 
+	apiNode.Init(this);
 }
 
-void AResourceNode::GetResource(UInventory* reciever)
+int AResourceNode::GetResource(UInventory* reciever)
 {
+	int errorType = 1;
 	for (auto& resource : resources)
 	{
 		if (FMath::RandRange(0, 10000) / 10000.f < resource.Value)
+		{
 			reciever->AddItem(resource.Key, 1);
+			errorType = 0;
+		}
 	}
+
+	return errorType;
+}
+
+MANResourceNode* AResourceNode::GetAPINode()
+{
+	return &apiNode;
 }
 
 void AResourceNode::AddResource(FName name, float chance)

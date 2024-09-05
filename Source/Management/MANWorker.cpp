@@ -1,45 +1,55 @@
-	// Fill out your copyright notice in the Description page of Project Settings.
+// Fill out your copyright notice in the Description page of Project Settings.
 
 
-	#include "MANWorker.h"
+#include "MANWorker.h"
+#include "MANResourceNode.h"
 
-	#include "Worker.h"
+#include "ResourceNode.h"
+#include "Worker.h"
 
-	void MANWorker::Debug(const wchar_t* message) const
-	{
-		if (boundActor)
-			Cast<AWorker>(boundActor)->DebugMessage(FString(message));
-	}
+void MANWorker::Debug(const wchar_t* message) const
+{
+	if (boundActor)
+		Cast<AWorker>(boundActor)->DebugMessage(FString(message));
+}
 
-	void MANWorker::Init(AActor* actor)
-	{
-		SetBoundActor(actor);
-	}
+void MANWorker::Init(AActor* actor)
+{
+	SetBoundActor(actor);
+}
 
-	void MANWorker::MoveTo(const MANObject& object)
-	{
-		if (boundActor)
-			Cast<AWorker>(boundActor)->MoveTo(object.GetBoundActor()->GetActorLocation());
-	}
+void MANWorker::MoveTo(const MANObject& object)
+{
+	if (boundActor)
+		Cast<AWorker>(boundActor)->MoveTo(object.GetBoundActor()->GetActorLocation());
+}
 
-	void MANWorker::MoveTo(const MANObject* object)
-	{
-		MoveTo(*object);
-	}
+void MANWorker::MoveTo(const MANObject* object)
+{
+	MoveTo(*object);
+}
 
-	void MANWorker::MoveTo(const std::pair<double, double> position)
-	{
-		if (boundActor)
-			Cast<AWorker>(boundActor)->MoveTo(FVector(position.first, 0, position.second));
-	}
+void MANWorker::MoveTo(const std::pair<double, double> position)
+{
+	if (boundActor)
+		Cast<AWorker>(boundActor)->MoveTo(FVector(position.first, 0, position.second));
+}
 
-	std::pair<double, double> MANWorker::FindNearestResourceNode() const
-	{
-		FVector position{};
+MANResourceNode* MANWorker::FindNearestResourceNode() const
+{
+	MANResourceNode* resourceNode = nullptr;
 
-		if (boundActor)
-			position = Cast<AWorker>(boundActor)->FindNearestResourceNode();
+	if (boundActor)
+		resourceNode = Cast<AWorker>(boundActor)->FindNearestResourceNode();
 
 
-		return std::pair<double, double>(position.X, position.Z);
-	}
+	return resourceNode;
+}
+
+int MANWorker::MineResourceNode(MANResourceNode* node)
+{
+	if (boundActor)
+		return Cast<AWorker>(boundActor)->MineResourceNode(Cast<AResourceNode>(node->GetBoundActor()));
+
+	return -1;
+}

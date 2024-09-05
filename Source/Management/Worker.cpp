@@ -10,6 +10,7 @@
 #include "Engine/Engine.h"
 
 // Custom Headers
+#include "MANResourceNode.h"
 #include "ResourceNode.h"
 #include "MANWorker.h"
 
@@ -27,11 +28,12 @@ void AWorker::InitFlipbook(const FString& path)
 	flipbook->SetFlipbook(LoadObject<UPaperFlipbook>(NULL, *path));
 }
 
-void AWorker::MineResourceNode(AResourceNode* targetNode)
+int AWorker::MineResourceNode(AResourceNode* targetNode)
 {
-	{
-		targetNode->GetResource(inventory);
-	}
+	if (FVector::Dist2D(GetActorLocation(), targetNode->GetActorLocation()) > 5.)
+		return 2; // Too far away
+
+	return targetNode->GetResource(inventory);
 }
 
 void AWorker::MoveTo(const FVector& location)
@@ -46,25 +48,24 @@ void AWorker::DebugMessage(const FString& message) const
 	GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, message);
 }
 
-FVector AWorker::FindNearestResourceNode() const
+MANResourceNode* AWorker::FindNearestResourceNode() const
 {
 	TArray<AActor*> outActors{};
 
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AResourceNode::StaticClass(), outActors);
 
 	if (outActors.IsEmpty())
-		return GetActorLocation();
+		return nullptr;
 
-	FVector nearest = outActors[0]->GetActorLocation();
-	FVector currentLocation = GetActorLocation();
+	AResourceNode* nearest = Cast<AResourceNode>(outActors[0]);
 
 	for (const auto& actor : outActors)
 	{
-		if (FVector::Dist2D(currentLocation, actor->GetActorLocation()) < nearest.Length())
-			nearest = actor->GetActorLocation();
+		if (FVector::Dist2D(GetActorLocation(), actor->GetActorLocation()) < FVector::Dist2D(GetActorLocation(), nearest->GetActorLocation()))
+			nearest = Cast<AResourceNode>(actor);
 	}
 
-	return nearest;
+	return nearest->GetAPINode();
 }
 
 void AWorker::Tick(float deltaTime)

@@ -29,11 +29,11 @@ public:
 	UInventory* inventory;
 
 	void InitFlipbook(const FString& path);
-	void MineResourceNode(AResourceNode* targetNode);
 
+	int MineResourceNode(AResourceNode* targetNode) override;
 	void MoveTo(const FVector& position) override;
 	void DebugMessage(const FString& message) const override;
-	FVector FindNearestResourceNode() const override;
+	MANResourceNode* FindNearestResourceNode() const override;
 
 	void Tick(float deltaTime) override;
 	void BeginPlay() override;
