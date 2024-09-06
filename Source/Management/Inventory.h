@@ -17,6 +17,7 @@ class MANAGEMENT_API UInventory : public UActorComponent
 public:	
 	UInventory();
 
+	void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable)
 	void TakeItem(FName name, int32 amount, UInventory* reciever);
@@ -25,11 +26,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool Check(FName name);
 
+	TMap<FName, int32> GetItems() const;
 protected:
 
 
 private:
 
+	UPROPERTY()
 	TMap<FName, int32> items;
 
 	void AddItem(FName name, int32 amount);

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include <map>
 
 /**
  * 
@@ -14,5 +15,6 @@ public:
 	virtual void DebugMessage(const FString& message) const = 0;
 	virtual class MANResourceNode* FindNearestResourceNode() const = 0;
 	virtual int MineResourceNode(class AResourceNode* targetNode) = 0;
+	virtual TMap<FName, int32> GetInventory() const = 0;
 
 };

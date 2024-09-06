@@ -35,6 +35,7 @@ public:
 	void MoveTo(const FVector& position) override;
 	void DebugMessage(const FString& message) const override;
 	MANResourceNode* FindNearestResourceNode() const override;
+	TMap<FName, int32> GetInventory() const override;
 
 	void Tick(float deltaTime) override;
 	void BeginPlay() override;

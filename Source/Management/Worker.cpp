@@ -21,6 +21,7 @@ AWorker::AWorker(const FObjectInitializer& FObjectInitializer)
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.TickInterval = 1.f;
 
+	inventory = CreateDefaultSubobject<UInventory>(L"UInventory");
 }
 
 void AWorker::InitFlipbook(const FString& path)
@@ -69,9 +70,15 @@ MANResourceNode* AWorker::FindNearestResourceNode() const
 	return nearest->GetAPINode();
 }
 
+TMap<FName, int32> AWorker::GetInventory() const
+{
+	return inventory->GetItems();
+}
+
 void AWorker::Tick(float deltaTime)
 {
 	Super::Tick(deltaTime);
+
 
 	if (userScript)
 	{
