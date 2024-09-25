@@ -5,64 +5,63 @@
 
 #include "MainWidget.h"
 #include "ResourceNode.h"
-#include "Kismet/GameplayStatics.h"
 #include "Worker.h"
-#include "Engine/Engine.h"
 #include "WorkerFactory.h"
+
+#include "Kismet/GameplayStatics.h"
+#include "Engine/Engine.h"
 
 // Sets default values
 AGameBox::AGameBox()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	SetStandartVariables();
-	SetUserVariables();
+	PrimaryActorTick.bCanEverTick = false;
 
 }
 
-void AGameBox::TestFuncion()
+void AGameBox::CreateWorker()
 {
 	AWorkerFactory* workerFactory = Cast<AWorkerFactory>(UGameplayStatics::GetActorOfClass(GetWorld(), AWorkerFactory::StaticClass()));
 	workerFactory->CreateWorker();
 }
 
-void AGameBox::SetOnBegin(TFunction<void()> _onBegin)
+void AGameBox::MANLoadLibrary()
 {
-	onBegin = _onBegin;
-}
+	AObjectLoader* objectLoader = Cast<AObjectLoader>(UGameplayStatics::GetActorOfClass(GetWorld(), AObjectLoader::StaticClass()));
 
-void AGameBox::SetOnTick(TFunction<void()> _onTick)
-{
-	onTick = _onTick;
-}
+	TArray<AActor*> workers;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AWorker::StaticClass(), workers);
 
-TArray<AResourceNode*> AGameBox::GetAllResourceNodes()
-{
-	TArray<AActor*> baseActors;
-	TArray<AResourceNode*> resourceNodes;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AResourceNode::StaticClass(), baseActors);
+	objectLoader->MANLoadLibrary(L"C:/Users/Repin_aw53/source/repos/PlayerManagement/x64/Debug/PlayerManagement.dll");
 
-	for (auto& actor : baseActors)
+	for (auto i : workers)
 	{
-		resourceNodes.Add(Cast<AResourceNode>(actor));
+		Cast<AWorker>(i)->LoadUserScript(objectLoader->CreateUserObject<MANWorker>("CreateUserCode"));
+	}
+}
+
+void AGameBox::UnloadLibrary()
+{
+	AObjectLoader* objectLoader = Cast<AObjectLoader>(UGameplayStatics::GetActorOfClass(GetWorld(), AObjectLoader::StaticClass()));
+
+	TArray<AActor*> workers;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AWorker::StaticClass(), workers);
+
+	for (auto i : workers)
+	{
+		Cast<AWorker>(i)->UnloadUserScript();
 	}
 
-	return resourceNodes;
+	objectLoader->MANUnloadLibrary();
 }
 
-TArray<AWorker*> AGameBox::GetAllWorkers()
-{
-	// Todo
 
-	return TArray<AWorker*>();
-}
 
 void AGameBox::BeginPlay()
 {
 	Super::BeginPlay();
 
 	CreateMainWidget();
-
-	onBegin();
 }
 
 void AGameBox::CreateMainWidget()
@@ -81,27 +80,13 @@ void AGameBox::AddFunctionsToButtons()
 {
 	if (mainWidget)
 	{
-		mainWidget->testButton->OnClicked.AddDynamic(this, &AGameBox::TestFuncion);
+		AObjectLoader* objectLoader = Cast<AObjectLoader>(UGameplayStatics::GetActorOfClass(GetWorld(), AObjectLoader::StaticClass()));
+
+
+		mainWidget->createWorker->OnClicked.AddDynamic(this, &AGameBox::CreateWorker);
+		mainWidget->unloadLibrary->OnClicked.AddDynamic(this, &AGameBox::UnloadLibrary);
+		mainWidget->loadLibrary->OnClicked.AddDynamic(this, &AGameBox::MANLoadLibrary);
 	}
 }
 
-void AGameBox::SetStandartVariables()
-{
-	// Ticks every one second
-	PrimaryActorTick.bCanEverTick = true;
-	PrimaryActorTick.TickInterval = 1.f;
-}
-
-void AGameBox::SetUserVariables()
-{
-	onBegin = []() {};
-	onTick = []() {};
-}
-
-void AGameBox::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-	onTick();
-}
 

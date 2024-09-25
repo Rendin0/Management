@@ -29,6 +29,8 @@ public:
 	TMap<FName, float> resources;
 
 	MANResourceNode* GetAPINode();
+	std::pair<double, double> GetPosition();
+
 protected:
 	
 

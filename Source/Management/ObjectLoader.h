@@ -30,6 +30,7 @@ public:
 	void Init(const FString& pathToDLL);
 
 	bool MANLoadLibrary(const FString& path);
+	bool MANUnloadLibrary();
 
 	template <DerivedFromMANObject Cl>
 	Cl* CreateUserObject(const std::string& functionName);

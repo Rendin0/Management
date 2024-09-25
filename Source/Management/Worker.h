@@ -39,8 +39,10 @@ public:
 
 	void Tick(float deltaTime) override;
 	void BeginPlay() override;
+	void BeginDestroy() override;
 
-
+	void UnloadUserScript();
+	void LoadUserScript(MANWorker* script);
 protected:
 
 private:

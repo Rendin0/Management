@@ -24,7 +24,13 @@ public:
 	// Adds dynamic function from class to button with name buttonName
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
-	UButton* testButton;
+	UButton* createWorker;
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UButton* loadLibrary;
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UButton* unloadLibrary;
 protected:
 
 

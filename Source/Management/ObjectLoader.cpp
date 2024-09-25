@@ -34,7 +34,7 @@ bool AObjectLoader::MANLoadLibrary(const FString& path)
 	}
 	catch (const std::exception& ex)
 	{
-		FString errorMsg = FString::Printf(TEXT("Lib Error: %s"), UTF8_TO_TCHAR(ex.what()));
+		FString errorMsg = FString::Printf(TEXT("Lib Load Error: %s"), UTF8_TO_TCHAR(ex.what()));
 		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, errorMsg);
 	}
 	if (!lib.is_loaded())
@@ -42,6 +42,24 @@ bool AObjectLoader::MANLoadLibrary(const FString& path)
 		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, L"Cannot load library");
 		return false;
 	}
+
+	return true;
+}
+
+bool AObjectLoader::MANUnloadLibrary()
+{
+	try
+	{
+		lib.unload();
+	}
+	catch (const std::exception& ex)
+	{
+		FString errorMsg = FString::Printf(TEXT("Lib Unload Error: %s"), UTF8_TO_TCHAR(ex.what()));
+		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, errorMsg);
+	}
+
+	if (lib.is_loaded())
+		return false;
 
 	return true;
 }

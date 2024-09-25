@@ -22,6 +22,7 @@ public:
 	friend class MANResourceNode;
 	friend class MANWorker;
 
+	virtual ~MANObject() = default;
 protected:
 	void SetBoundActor(AActor* actor);
 	AActor* boundActor;

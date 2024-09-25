@@ -34,6 +34,13 @@ MANResourceNode* AResourceNode::GetAPINode()
 	return &apiNode;
 }
 
+std::pair<double, double> AResourceNode::GetPosition()
+{
+	FVector pos = GetActorLocation();
+
+	return std::pair<double, double>(pos.X, pos.Z);
+}
+
 void AResourceNode::AddResource(FName name, float chance)
 {
 	float* item = resources.Find(name);

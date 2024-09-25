@@ -22,23 +22,15 @@ public:
 	AGameBox();
 
 	UFUNCTION()
-	void TestFuncion();
-	
-	void SetOnBegin(TFunction<void()> _onBegin);
-	void SetOnTick(TFunction<void()> _onTick);
-
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	void CreateWorker();
+	void MANLoadLibrary();
+	void UnloadLibrary();
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UMainWidget> mainWidgetClass;
 
 	UPROPERTY()
 	UMainWidget* mainWidget;
-
-	TArray<AResourceNode*> GetAllResourceNodes();
-	TArray<AWorker*> GetAllWorkers();
-
 
 protected:
 	// Called when the game starts or when spawned
@@ -47,8 +39,6 @@ protected:
 private:
 	void CreateMainWidget();
 	void AddFunctionsToButtons();
-	void SetStandartVariables();
-	void SetUserVariables();
 
 	TFunction<void()> onBegin;
 	TFunction<void()> onTick;

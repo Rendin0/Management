@@ -54,9 +54,9 @@ int MANWorker::MineResourceNode(MANResourceNode* node)
 	return -1;
 }
 
-std::map<std::string, int> MANWorker::GetInventory() const
+std::map<std::string, int>* MANWorker::GetInventory() const
 {
-	std::map<std::string, int> toReturn{};
+	auto* toReturn = new std::map<std::string, int>{};
 
 	if (boundActor)
 	{
@@ -70,7 +70,7 @@ std::map<std::string, int> MANWorker::GetInventory() const
 			std::string first = TCHAR_TO_UTF8(*(item.Key.ToString()));
 			int second = item.Value;
 
-			toReturn.emplace(first, second);
+			toReturn->emplace(first, second);
 		}
 	}
 
