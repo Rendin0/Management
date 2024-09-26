@@ -76,3 +76,15 @@ std::map<std::string, int>* MANWorker::GetInventory() const
 
 	return toReturn;
 }
+
+void MANWorker::OnWorkerCreate()
+{
+}
+
+void MANWorker::OnDestroy()
+{
+}
+
+void MANWorker::OnScriptUnload()
+{
+}

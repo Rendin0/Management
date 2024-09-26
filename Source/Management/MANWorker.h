@@ -27,8 +27,20 @@ public:
 	int MineResourceNode(MANResourceNode* node);
 	std::map<std::string, int>* GetInventory() const;
 
+	// Called every tick
 	virtual void Update() = 0;
+
+	// Called on script load and worker creation
 	virtual void Begin() = 0;
+
+	// Called on worker creation
+	virtual void OnWorkerCreate();
+
+	// Called on worker destruction
+	virtual void OnDestroy();
+
+	// Called on script unload and worker destruction
+	virtual void OnScriptUnload();
 
 	virtual ~MANWorker() override = default;
 protected:

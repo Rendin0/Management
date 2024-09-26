@@ -95,17 +95,26 @@ void AWorker::BeginPlay()
 	if (loader)
 		LoadUserScript(Cast<AObjectLoader>(loader)->CreateUserObject<MANWorker>("CreateUserCode"));
 
+	if (userScript)
+		userScript->OnWorkerCreate();
+
 }
 
 void AWorker::BeginDestroy()
 {
 	Super::BeginDestroy();
 
+	if (userScript)
+		userScript->OnDestroy();
+
 	UnloadUserScript();
 }
 
 void AWorker::UnloadUserScript()
 {
+	if (userScript)
+		userScript->OnScriptUnload();
+
 	delete userScript;
 	userScript = nullptr;
 }
