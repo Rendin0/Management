@@ -25,7 +25,7 @@ public:
 	virtual ~MANObject() = default;
 protected:
 	void SetBoundActor(AActor* actor);
-	AActor* boundActor;
+	AActor* boundActor{ nullptr };
 	AActor* GetBoundActor() const;
 
 
