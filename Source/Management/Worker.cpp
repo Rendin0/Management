@@ -93,15 +93,8 @@ void AWorker::BeginPlay()
 	auto loader = UGameplayStatics::GetActorOfClass(GetWorld(), AObjectLoader::StaticClass());
 
 	if (loader)
-	{
 		LoadUserScript(Cast<AObjectLoader>(loader)->CreateUserObject<MANWorker>("CreateUserCode"));
-	}
 
-	if (userScript)
-	{
-		userScript->Init(this);
-		userScript->Begin();
-	}
 }
 
 void AWorker::BeginDestroy()
@@ -114,9 +107,16 @@ void AWorker::BeginDestroy()
 void AWorker::UnloadUserScript()
 {
 	delete userScript;
+	userScript = nullptr;
 }
 
 void AWorker::LoadUserScript(MANWorker* script)
 {
 	userScript = script;
+
+	if (userScript)
+	{
+		userScript->Init(this);
+		userScript->Begin();
+	}
 }

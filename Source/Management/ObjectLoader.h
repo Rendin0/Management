@@ -43,6 +43,9 @@ private:
 template<DerivedFromMANObject Cl>
 inline Cl* AObjectLoader::CreateUserObject(const std::string& functionName)
 {
+	if (!lib.is_loaded())
+		return nullptr;
+
 	auto createUserObjectFunc = lib.get<Cl * __cdecl()>(functionName);
 
 	if (createUserObjectFunc)

@@ -23,7 +23,9 @@ public:
 
 	UFUNCTION()
 	void CreateWorker();
+	UFUNCTION()
 	void MANLoadLibrary();
+	UFUNCTION()
 	void UnloadLibrary();
 
 	UPROPERTY(EditAnywhere)

@@ -34,7 +34,7 @@ void AGameBox::MANLoadLibrary()
 
 	objectLoader->MANLoadLibrary(L"C:/Users/Repin_aw53/source/repos/PlayerManagement/x64/Debug/PlayerManagement.dll");
 
-	for (auto i : workers)
+	for (auto& i : workers)
 	{
 		Cast<AWorker>(i)->LoadUserScript(objectLoader->CreateUserObject<MANWorker>("CreateUserCode"));
 	}
@@ -47,7 +47,7 @@ void AGameBox::UnloadLibrary()
 	TArray<AActor*> workers;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AWorker::StaticClass(), workers);
 
-	for (auto i : workers)
+	for (auto& i : workers)
 	{
 		Cast<AWorker>(i)->UnloadUserScript();
 	}
@@ -80,9 +80,6 @@ void AGameBox::AddFunctionsToButtons()
 {
 	if (mainWidget)
 	{
-		AObjectLoader* objectLoader = Cast<AObjectLoader>(UGameplayStatics::GetActorOfClass(GetWorld(), AObjectLoader::StaticClass()));
-
-
 		mainWidget->createWorker->OnClicked.AddDynamic(this, &AGameBox::CreateWorker);
 		mainWidget->unloadLibrary->OnClicked.AddDynamic(this, &AGameBox::UnloadLibrary);
 		mainWidget->loadLibrary->OnClicked.AddDynamic(this, &AGameBox::MANLoadLibrary);
