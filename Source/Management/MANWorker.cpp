@@ -54,26 +54,28 @@ int MANWorker::MineResourceNode(MANResourceNode* node)
 	return -1;
 }
 
-std::map<std::wstring, int> MANWorker::GetInventory() const
+const wchar_t* MANWorker::GetInventory()
 {
-	std::map<std::wstring, int> toReturn{};
+	std::wstring inv{};
 
 	if (boundActor)
 	{
 		auto items = Cast<AWorker>(boundActor)->GetInventory();
 
 		if (items.IsEmpty())
-			return toReturn;
+			return L"";
 
 		for (const auto& item : items)
 		{
 			std::wstring first = *(item.Key.ToString());
 			int second = item.Value;
 
-			toReturn.emplace(first, second);
+			inv += L"{" + first + L":" + std::to_wstring(second) + L"}";
 		}
 	}
 
+	static const wchar_t* toReturn = inv.c_str();
+	Debug(toReturn);
 	return toReturn;
 }
 
