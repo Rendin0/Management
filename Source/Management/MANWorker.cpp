@@ -74,7 +74,10 @@ const wchar_t* MANWorker::GetInventory()
 		}
 	}
 
-	return ConvertString(inv);
+	const wchar_t* out = nullptr;
+	ConvertString(inv, out);
+
+	return out;
 }
 
 void MANWorker::OnWorkerCreate()

@@ -28,7 +28,7 @@ protected:
 	AActor* boundActor{ nullptr };
 	AActor* GetBoundActor() const;
 
-	const wchar_t* ConvertString(const std::wstring& str);
+	void ConvertString(const std::wstring& str, const wchar_t*& buf);
 
 private:
 

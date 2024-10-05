@@ -13,7 +13,7 @@ AActor* MANObject::GetBoundActor() const
 	return boundActor;
 }
 
-const wchar_t* MANObject::ConvertString(const std::wstring& str)
+void MANObject::ConvertString(const std::wstring& str, const wchar_t*& buf)
 {
 	std::wstring out{};
 
@@ -22,5 +22,5 @@ const wchar_t* MANObject::ConvertString(const std::wstring& str)
 		out += UTF8_TO_TCHAR(&i);
 	}
 
-	return out.c_str();
+	buf = out.c_str();
 }
