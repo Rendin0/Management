@@ -6,8 +6,6 @@
 
 
 #include "MANObject.h"
-#include <string>
-#include <map>
 
 class MANResourceNode;
 

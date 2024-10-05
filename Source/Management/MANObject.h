@@ -9,7 +9,7 @@
 #endif
 
 class AActor;
-
+#include <string>
 
 /**
  * 
@@ -28,6 +28,7 @@ protected:
 	AActor* boundActor{ nullptr };
 	AActor* GetBoundActor() const;
 
+	const wchar_t* ConvertString(const std::wstring& str);
 
 private:
 

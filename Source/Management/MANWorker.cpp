@@ -74,9 +74,7 @@ const wchar_t* MANWorker::GetInventory()
 		}
 	}
 
-	static const wchar_t* toReturn = inv.c_str();
-	Debug(toReturn);
-	return toReturn;
+	return ConvertString(inv);
 }
 
 void MANWorker::OnWorkerCreate()
