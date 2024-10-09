@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Button.h"
+#include "Components/EditableTextBox.h"
 
 #include "MainWidget.generated.h"
 
@@ -31,6 +32,13 @@ public:
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	UButton* unloadLibrary;
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UEditableTextBox* dllNameInput;
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	UEditableTextBox* funcNameInput;
+
 protected:
 
 

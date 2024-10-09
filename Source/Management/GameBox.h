@@ -23,9 +23,9 @@ public:
 
 	UFUNCTION()
 	void CreateWorker();
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void MANLoadLibrary();
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void UnloadLibrary();
 
 	UPROPERTY(EditAnywhere)

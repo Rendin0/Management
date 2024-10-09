@@ -10,6 +10,8 @@
 
 #include "Kismet/GameplayStatics.h"
 #include "Engine/Engine.h"
+#include "Misc/Paths.h"
+#include "HAL/PlatformFileManager.h"
 
 // Sets default values
 AGameBox::AGameBox()
@@ -32,11 +34,14 @@ void AGameBox::MANLoadLibrary()
 	TArray<AActor*> workers;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AWorker::StaticClass(), workers);
 
-	objectLoader->MANLoadLibrary(L"C:/Users/Repin_aw53/source/repos/PlayerManagement/x64/Debug/PlayerManagement.dll");
+	// Path to %APPDATA%/Management/PlayerDLLs/
+	FString pathToDLL = FPaths::EngineUserDir() + L"../../../Roaming/Management/PlayerDLLs/";
+	objectLoader->MANLoadLibrary(FPaths::Combine(pathToDLL, mainWidget->dllNameInput->GetText().ToString()));
 
 	for (auto& i : workers)
 	{
-		Cast<AWorker>(i)->LoadUserScript(objectLoader->CreateUserObject<MANWorker>("CreateUserCode"));
+		// Loads Func from DLL with name from widget
+		Cast<AWorker>(i)->LoadUserScript(objectLoader->CreateUserObject<MANWorker>(TCHAR_TO_UTF8(*mainWidget->funcNameInput->GetText().ToString())));
 	}
 }
 

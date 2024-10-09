@@ -32,7 +32,7 @@ void AWorker::InitFlipbook(const FString& path)
 
 int AWorker::MineResourceNode(AResourceNode* targetNode)
 {
-	if (FVector::Dist2D(GetActorLocation(), targetNode->GetActorLocation()) > 5.)
+	if (FVector::Dist(GetActorLocation() * FVector(1, 0, 1), targetNode->GetActorLocation() * FVector(1, 0, 1)) > 5.)
 		return 2; // Too far away
 
 	return targetNode->GetResource(inventory);
@@ -42,7 +42,7 @@ void AWorker::MoveTo(const FVector& location)
 {
 	const FVector currentLocation = GetActorLocation();
 
-	SetActorLocation(currentLocation + ((location - currentLocation).GetSafeNormal() * moveSpeed));
+	SetActorLocation(currentLocation + (((location - currentLocation) * FVector(1, 0, 1)).GetSafeNormal() * moveSpeed));
 }
 
 void AWorker::DebugMessage(const FString& message) const

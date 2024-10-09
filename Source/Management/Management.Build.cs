@@ -20,6 +20,7 @@ public class Management : ModuleRules
 
         PublicSystemIncludePaths.Add(Path.Combine(BoostPath));
 
+
         PublicAdditionalLibraries.Add(Path.Combine(BoostLibPath, "libboost_filesystem-vc143-mt-x64-1_86.lib"));
         PublicAdditionalLibraries.Add(Path.Combine(BoostLibPath, "libboost_exception-vc143-mt-x64-1_86.lib"));
 
