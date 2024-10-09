@@ -23,7 +23,7 @@ public:
 	void MoveTo(const std::pair<double, double> position);
 	MANResourceNode* FindNearestResourceNode() const;
 	int MineResourceNode(MANResourceNode* node);
-	const wchar_t* GetInventory();
+	void GetInventory(wchar_t*& buf);
 
 	// Called every tick
 	virtual void Update() = 0;

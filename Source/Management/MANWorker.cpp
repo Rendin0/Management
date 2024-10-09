@@ -54,7 +54,7 @@ int MANWorker::MineResourceNode(MANResourceNode* node)
 	return -1;
 }
 
-const wchar_t* MANWorker::GetInventory()
+void MANWorker::GetInventory(wchar_t*& buf)
 {
 	std::wstring inv{};
 
@@ -63,7 +63,7 @@ const wchar_t* MANWorker::GetInventory()
 		auto items = Cast<AWorker>(boundActor)->GetInventory();
 
 		if (items.IsEmpty())
-			return L"";
+			return;
 
 		for (const auto& item : items)
 		{
@@ -74,10 +74,12 @@ const wchar_t* MANWorker::GetInventory()
 		}
 	}
 
-	const wchar_t* out = nullptr;
-	ConvertString(inv, out);
-
-	return out;
+	buf = new wchar_t[inv.size() + 1];
+	buf[inv.size()] = L'\0';
+	for (int i = 0; i < inv.size(); i++)
+	{
+		buf[i] = inv.at(i);
+	}
 }
 
 void MANWorker::OnWorkerCreate()
