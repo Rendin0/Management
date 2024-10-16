@@ -16,7 +16,7 @@ class MAN_API MANWorker : private MANObject
 {
 public:
 
-	void  Debug(const wchar_t* message) const;
+	void Debug(const wchar_t* message) const;
 	void Init(AActor* actor);
 	void MoveTo(const MANObject& object);
 	void MoveTo(const MANObject* object);
@@ -24,6 +24,7 @@ public:
 	MANResourceNode* FindNearestResourceNode() const;
 	int MineResourceNode(MANResourceNode* node);
 	void GetInventory(wchar_t*& buf);
+	int SendResource(MANObject* receiver); // TODO
 
 	// Called every tick
 	virtual void Update() = 0;

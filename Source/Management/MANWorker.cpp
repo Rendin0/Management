@@ -82,6 +82,12 @@ void MANWorker::GetInventory(wchar_t*& buf)
 	}
 }
 
+int MANWorker::SendResource(MANObject* receiver)
+{
+	// TODO
+	return 0;
+}
+
 void MANWorker::OnWorkerCreate()
 {
 }
