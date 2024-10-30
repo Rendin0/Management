@@ -26,6 +26,11 @@ public:
 	void GetInventory(wchar_t*& buf);
 	int SendResource(MANObject* receiver); // TODO
 
+	// Test
+	void Log(const wchar_t* message) const;
+	std::string Test();
+	// Test
+
 	// Called every tick
 	virtual void Update() = 0;
 

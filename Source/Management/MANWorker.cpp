@@ -88,6 +88,20 @@ int MANWorker::SendResource(MANObject* receiver)
 	return 0;
 }
 
+void MANWorker::Log(const wchar_t* message) const
+{
+	if (boundActor)
+	{
+		Cast<AWorker>(boundActor)->Log(
+			message);
+	}
+}
+
+std::string MANWorker::Test()
+{
+	return std::string("Hello World!");
+}
+
 void MANWorker::OnWorkerCreate()
 {
 }

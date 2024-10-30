@@ -36,6 +36,7 @@ public:
 	void DebugMessage(const FString& message) const override;
 	MANResourceNode* FindNearestResourceNode() const override;
 	TMap<FName, int32> GetInventory() const override;
+	void Log(const wchar_t* message);
 
 	void Tick(float deltaTime) override;
 	void BeginPlay() override;

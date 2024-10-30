@@ -75,6 +75,11 @@ TMap<FName, int32> AWorker::GetInventory() const
 	return inventory->GetItems();
 }
 
+void AWorker::Log(const wchar_t* message)
+{
+	UE_LOG(LogTemp, Warning, TEXT("%s"), message)
+}
+
 void AWorker::Tick(float deltaTime)
 {
 	Super::Tick(deltaTime);
