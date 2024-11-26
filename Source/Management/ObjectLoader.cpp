@@ -5,9 +5,6 @@
 
 #include "MANWorker.h"
 
-#include <boost/dll/import.hpp>
-#include <boost/function.hpp>
-
 namespace boost
 {
 	void throw_exception(std::exception const&) {}
@@ -28,18 +25,10 @@ void AObjectLoader::Init(const FString& pathToDLL)
 bool AObjectLoader::MANLoadLibrary(const FString& path)
 {
 
-	try
+	lib = FPlatformProcess::GetDllHandle(*path);
+	if (!lib)
 	{
-		lib.load(TCHAR_TO_UTF8(*path));
-	}
-	catch (const std::exception& ex)
-	{
-		FString errorMsg = FString::Printf(TEXT("Lib Load Error: %s"), UTF8_TO_TCHAR(ex.what()));
-		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, errorMsg);
-	}
-	if (!lib.is_loaded())
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, L"Cannot load library");
+		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, TEXT("Can not load library"));
 		return false;
 	}
 
@@ -48,18 +37,11 @@ bool AObjectLoader::MANLoadLibrary(const FString& path)
 
 bool AObjectLoader::MANUnloadLibrary()
 {
-	try
+	if (lib)
 	{
-		lib.unload();
+		FPlatformProcess::FreeDllHandle(lib);
+		lib = nullptr;
 	}
-	catch (const std::exception& ex)
-	{
-		FString errorMsg = FString::Printf(TEXT("Lib Unload Error: %s"), UTF8_TO_TCHAR(ex.what()));
-		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Red, errorMsg);
-	}
-
-	if (lib.is_loaded())
-		return false;
 
 	return true;
 }

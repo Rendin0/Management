@@ -7,10 +7,12 @@
 
 #include "MANObject.h"
 
+#include <map>
+
 class MANResourceNode;
 
 /**
- * 
+ *
  */
 class MAN_API MANWorker : private MANObject
 {
@@ -23,7 +25,7 @@ public:
 	void MoveTo(const std::pair<double, double> position);
 	MANResourceNode* FindNearestResourceNode() const;
 	int MineResourceNode(MANResourceNode* node);
-	void GetInventory(wchar_t*& buf);
+	std::map<std::wstring, int> GetInventory();
 	int SendResource(MANObject* receiver); // TODO
 
 	// Called every tick

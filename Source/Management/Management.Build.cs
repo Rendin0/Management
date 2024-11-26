@@ -15,15 +15,6 @@ public class Management : ModuleRules
 
         PublicDefinitions.AddRange(new string[] { "MANAGEMENT_EXPORTS" });
 
-        string BoostPath = "C:/Boost/boost_1_86_0";
-        string BoostLibPath = Path.Combine(BoostPath, "stage", "lib");
-
-        PublicSystemIncludePaths.Add(Path.Combine(BoostPath));
-
-
-        PublicAdditionalLibraries.Add(Path.Combine(BoostLibPath, "libboost_filesystem-vc143-mt-x64-1_86.lib"));
-        PublicAdditionalLibraries.Add(Path.Combine(BoostLibPath, "libboost_exception-vc143-mt-x64-1_86.lib"));
-
         bEnableExceptions = true;
 
         // Uncomment if you are using Slate UI
@@ -49,6 +40,7 @@ public class Management : ModuleRules
 
         if (!Directory.Exists(includePath))
             Directory.CreateDirectory(includePath);
+
 
         File.Copy(Path.Combine(ModuleDirectory, "MANObject.h"), Path.Combine(includePath, "MANObject.h"), true);
         File.Copy(Path.Combine(ModuleDirectory, "MANWorker.h"), Path.Combine(includePath, "MANWorker.h"), true);

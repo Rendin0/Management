@@ -41,7 +41,7 @@ void AGameBox::MANLoadLibrary()
 	for (auto& i : workers)
 	{
 		// Loads Func from DLL with name from widget
-		Cast<AWorker>(i)->LoadUserScript(objectLoader->CreateUserObject<MANWorker>(TCHAR_TO_UTF8(*mainWidget->funcNameInput->GetText().ToString())));
+		Cast<AWorker>(i)->LoadUserScript(objectLoader->CreateUserObject<MANWorker>(mainWidget->funcNameInput->GetText().ToString()));
 	}
 }
 

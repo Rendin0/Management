@@ -54,32 +54,32 @@ int MANWorker::MineResourceNode(MANResourceNode* node)
 	return -1;
 }
 
-void MANWorker::GetInventory(wchar_t*& buf)
+std::map<std::wstring, int> MANWorker::GetInventory()
 {
-	std::wstring inv{};
+	std::map<std::wstring, int> inv{};
 
 	if (boundActor)
 	{
 		auto items = Cast<AWorker>(boundActor)->GetInventory();
-
-		if (items.IsEmpty())
-			return;
 
 		for (const auto& item : items)
 		{
 			std::wstring first = *(item.Key.ToString());
 			int second = item.Value;
 
-			inv += L"{" + first + L":" + std::to_wstring(second) + L"}";
+			inv.emplace(first, second);
+			//inv += L"{" + first + L":" + std::to_wstring(second) + L"}";
 		}
 	}
 
-	buf = new wchar_t[inv.size() + 1];
+	/*buf = new wchar_t[inv.size() + 1];
 	buf[inv.size()] = L'\0';
 	for (int i = 0; i < inv.size(); i++)
 	{
 		buf[i] = inv.at(i);
-	}
+	}*/
+
+	return inv;
 }
 
 int MANWorker::SendResource(MANObject* receiver)

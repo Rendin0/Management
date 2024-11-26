@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include <boost/dll/shared_library.hpp>
 #include "Engine/Engine.h"
 
 #include "MANWorker.h"
@@ -33,20 +32,22 @@ public:
 	bool MANUnloadLibrary();
 
 	template <DerivedFromMANObject Cl>
-	Cl* CreateUserObject(const std::string& functionName);
+	Cl* CreateUserObject(const FString& functionName);
 
 private:
-	boost::dll::shared_library lib;
+	void* lib;
 
 };
 
 template<DerivedFromMANObject Cl>
-inline Cl* AObjectLoader::CreateUserObject(const std::string& functionName)
+inline Cl* AObjectLoader::CreateUserObject(const FString& functionName)
 {
-	if (!lib.is_loaded())
+	using UserObjectGetFunc = Cl* (__cdecl*)();
+
+	if (!lib)
 		return nullptr;
 
-	auto createUserObjectFunc = lib.get<Cl * __cdecl()>(functionName);
+	UserObjectGetFunc createUserObjectFunc = (UserObjectGetFunc)FPlatformProcess::GetDllExport(lib, *functionName);
 
 	if (createUserObjectFunc)
 		return createUserObjectFunc();
