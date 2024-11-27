@@ -34,7 +34,6 @@ public class Management : ModuleRules
         string targetFolderPath = Path.Combine(appDataPath, "Management");
         string includePath = Path.Combine(targetFolderPath, "Include");
 
-
         if (!Directory.Exists(targetFolderPath))
             Directory.CreateDirectory(targetFolderPath);
 

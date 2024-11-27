@@ -22,7 +22,7 @@ public:
 	void Init(AActor* actor);
 	void MoveTo(const MANObject& object);
 	void MoveTo(const MANObject* object);
-	void MoveTo(const std::pair<double, double> position);
+	void MoveTo(const std::pair<double, double>& position);
 	MANResourceNode* FindNearestResourceNode() const;
 	int MineResourceNode(MANResourceNode* node);
 	std::map<std::wstring, int> GetInventory();

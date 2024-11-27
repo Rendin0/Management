@@ -29,7 +29,7 @@ void MANWorker::MoveTo(const MANObject* object)
 	MoveTo(*object);
 }
 
-void MANWorker::MoveTo(const std::pair<double, double> position)
+void MANWorker::MoveTo(const std::pair<double, double>& position)
 {
 	if (boundActor)
 		Cast<AWorker>(boundActor)->MoveTo(FVector(position.first, 0, position.second));
